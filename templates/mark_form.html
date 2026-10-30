@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block title %}{{ 'Edit' if mark else 'Add' }} marks{% endblock %}
+{% block content %}<div class="form-card"><p class="eyebrow">ASSESSMENT RECORD</p><h1>{{ 'Edit marks' if mark else 'Add marks' }}</h1>
+{% if not students or not subjects %}<p class="flash error">Add at least one student and one subject before entering marks.</p>{% endif %}
+<form method="post" class="stack-form">
+<label>Student<select name="student_id" required>{% for s in students %}<option value="{{ s.student_id }}" {% if mark and mark.student_id == s.student_id %}selected{% endif %}>{{ s.roll_no }} — {{ s.name }} ({{ s.section }})</option>{% endfor %}</select></label>
+<label>Subject<select name="subject_id" required>{% for s in subjects %}<option value="{{ s.subject_id }}" {% if mark and mark.subject_id == s.subject_id %}selected{% endif %}>{{ s.subject_name }} (max {{ s.max_marks }}, pass {{ s.pass_marks }})</option>{% endfor %}</select></label>
+<label>Assessment name<input name="assessment" maxlength="80" required value="{{ mark.assessment if mark else 'Mid 1' }}" placeholder="e.g. Mid 1"></label>
+<label>Marks obtained<input type="number" name="marks_obtained" min="0" step="0.01" required value="{{ mark.marks_obtained if mark else '' }}"></label>
+<p class="hint">Marks must be from 0 up to the selected subject's maximum marks.</p>
+<div class="form-actions"><button class="button" type="submit" {% if not students or not subjects %}disabled{% endif %}>Save marks</button><a class="button secondary" href="{{ url_for('marks') }}">Cancel</a></div>
+</form></div>{% endblock %}

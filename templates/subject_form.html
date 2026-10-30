@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block title %}Add subject{% endblock %}
+{% block content %}<div class="form-card"><p class="eyebrow">CURRICULUM</p><h1>Add subject</h1>
+<form method="post" class="stack-form">
+<label>Subject name<input name="subject_name" maxlength="100" required></label>
+<label>Maximum marks<input type="number" name="max_marks" min="1" step="0.01" required value="100"></label>
+<label>Pass marks<input type="number" name="pass_marks" min="0" step="0.01" required value="40"></label>
+<div class="form-actions"><button class="button" type="submit">Save subject</button><a class="button secondary" href="{{ url_for('subjects') }}">Cancel</a></div>
+</form></div>{% endblock %}

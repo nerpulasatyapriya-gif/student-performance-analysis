@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · Student Performance{% endblock %}
+{% block content %}
+<section class="hero">
+  <div><p class="eyebrow">ACADEMIC OVERVIEW</p><h1>Student Performance Dashboard</h1>
+  <p>Manage records and quickly understand class performance.</p></div>
+  <a class="button" href="{{ url_for('add_mark') }}">+ Add marks</a>
+</section>
+<div class="stats">
+  <div class="stat"><span>Students</span><strong>{{ students }}</strong></div>
+  <div class="stat"><span>Subjects</span><strong>{{ subjects }}</strong></div>
+  <div class="stat"><span>Mark records</span><strong>{{ marks_count }}</strong></div>
+  <div class="stat"><span>Pass rate</span><strong>{{ pass_rate }}%</strong></div>
+  <div class="stat"><span>Average percentage</span><strong>{{ average }}%</strong></div>
+</div>
+<section class="panel">
+  <div class="section-heading"><div><h2>Performance charts</h2><p>Generated from marks stored in MySQL.</p></div></div>
+  <div class="chart-grid">
+    <div class="chart-card"><h3>Average marks by subject</h3><img src="{{ url_for('subject_chart') }}" alt="Bar chart of average marks by subject"></div>
+    <div class="chart-card"><h3>Pass percentage by subject</h3><img src="{{ url_for('pass_chart') }}" alt="Bar chart of pass percentages"></div>
+  </div>
+</section>
+<section class="panel">
+  <div class="section-heading"><div><h2>Students needing support</h2><p>Based on average percentage across recorded marks.</p></div></div>
+  <form class="inline-form" method="get"><label>Threshold (%) <input type="number" name="threshold" min="0" max="100" step="1" value="{{ threshold }}"></label><button class="button" type="submit">Apply</button></form>
+  {% if low %}<div class="table-wrap"><table><thead><tr><th>Roll no.</th><th>Name</th><th>Section</th><th>Average %</th></tr></thead><tbody>
+  {% for s in low %}<tr><td>{{ s.roll_no }}</td><td>{{ s.name }}</td><td>{{ s.section }}</td><td><span class="pill danger">{{ s.average_percentage }}%</span></td></tr>{% endfor %}
+  </tbody></table></div>{% else %}<p class="empty">No students are below this threshold, or no marks have been recorded.</p>{% endif %}
+</section>
+{% endblock %}

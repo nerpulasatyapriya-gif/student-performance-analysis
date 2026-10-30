@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block title %}Subjects{% endblock %}
+{% block content %}<div class="section-heading"><div><p class="eyebrow">CURRICULUM</p><h1>Subjects</h1><p>Maximum and passing marks are used for validation and reports.</p></div><a class="button" href="{{ url_for('add_subject') }}">+ Add subject</a></div>
+<div class="panel">{% if subjects %}<div class="table-wrap"><table><thead><tr><th>Subject</th><th>Maximum marks</th><th>Pass marks</th><th>Action</th></tr></thead><tbody>
+{% for s in subjects %}<tr><td>{{ s.subject_name }}</td><td>{{ s.max_marks }}</td><td>{{ s.pass_marks }}</td><td><form method="post" action="{{ url_for('delete_subject', subject_id=s.subject_id) }}" onsubmit="return confirm('Delete this subject and all its marks?')"><button class="button small danger-btn">Delete</button></form></td></tr>{% endfor %}
+</tbody></table></div>{% else %}<p class="empty">No subjects yet.</p>{% endif %}</div>{% endblock %}

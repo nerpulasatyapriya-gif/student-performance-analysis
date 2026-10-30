@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block title %}{{ 'Edit' if student else 'Add' }} student{% endblock %}
+{% block content %}<div class="form-card"><p class="eyebrow">STUDENT RECORD</p><h1>{{ 'Edit student' if student else 'Add student' }}</h1>
+<form method="post" class="stack-form">
+<label>Roll number<input name="roll_no" maxlength="30" required value="{{ student.roll_no if student else '' }}"></label>
+<label>Student name<input name="name" maxlength="120" required value="{{ student.name if student else '' }}"></label>
+<label>Section<input name="section" maxlength="30" required value="{{ student.section if student else '' }}" placeholder="e.g. AIML 8"></label>
+<div class="form-actions"><button class="button" type="submit">Save student</button><a class="button secondary" href="{{ url_for('students') }}">Cancel</a></div>
+</form></div>{% endblock %}
